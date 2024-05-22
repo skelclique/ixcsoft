@@ -6,6 +6,7 @@ import { SuOSSChamado } from './@types/su_oss_chamado'
 import { RadpopRadioClienteFibra } from './@types/radpop_radio_cliente_fibra'
 import { SuDiagnostico } from './@types/su_diagnostico'
 import { SuOSSAssunto } from './@types/su_oss_assunto'
+import { Funcionarios } from './@types/funcionarios'
 
 type UriColumnMap = {
   cliente: keyof Cliente
@@ -15,6 +16,7 @@ type UriColumnMap = {
   radpop_radio_cliente_fibra: keyof RadpopRadioClienteFibra
   su_diagnostico: keyof SuDiagnostico
   su_oss_assunto: keyof SuOSSAssunto
+  funcionarios: keyof Funcionarios
 }
 
 type Uri = keyof UriColumnMap
@@ -33,6 +35,7 @@ type UriReturnMap = {
   radpop_radio_cliente_fibra: IXCReturn<RadpopRadioClienteFibra>
   su_diagnostico: IXCReturn<SuDiagnostico>
   su_oss_assunto: IXCReturn<SuOSSAssunto>
+  funcionarios: IXCReturn<Funcionarios>
 }
 
 type Operator = '=' | '>' | '<' | '!='
