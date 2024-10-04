@@ -21,7 +21,7 @@ export type SuOSSChamado = {
   setor: string
   id_cidade: string
   id_tecnico: string
-  prioridade: string
+  prioridade: 'C' | 'A' | 'N' | 'B'
   mensagem: string
   protocolo: string
   endereco: string

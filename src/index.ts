@@ -1,4 +1,4 @@
-import axios, { AxiosInstance } from 'axios'
+import axios, { AxiosInstance, AxiosResponse } from 'axios'
 import { Cidade } from './@types/cidade'
 import { Cliente } from './@types/cliente'
 import { ClienteContrato } from './@types/cliente_contrato'
@@ -7,6 +7,13 @@ import { RadpopRadioClienteFibra } from './@types/radpop_radio_cliente_fibra'
 import { SuDiagnostico } from './@types/su_diagnostico'
 import { SuOSSAssunto } from './@types/su_oss_assunto'
 import { Funcionarios } from './@types/funcionarios'
+import { FnAReceber } from './@types/fn_areceber'
+import { SuOSSChamadoMensagem } from './@types/su_oss_chamado_mensagem'
+import { SuOSSChamadoExecutar } from './@types/su_oss_chamado_executar'
+import { SuTicket } from './@types/su_ticket'
+import { WflTarefa } from './@types/wfl_tarefa'
+import { SuOSSChamadoFechar } from './@types/su_oss_chamado_fechar'
+import { RadpopRadio } from './@types/radpop_radio'
 
 type UriColumnMap = {
   cliente: keyof Cliente
@@ -17,25 +24,42 @@ type UriColumnMap = {
   su_diagnostico: keyof SuDiagnostico
   su_oss_assunto: keyof SuOSSAssunto
   funcionarios: keyof Funcionarios
+  fn_areceber: keyof FnAReceber
+  su_oss_chamado_mensagem: keyof SuOSSChamadoMensagem
+  su_ticket: keyof SuTicket
+  wfl_tarefa: keyof WflTarefa
+  radpop_radio: keyof RadpopRadio
 }
 
 type Uri = keyof UriColumnMap
 
-type IXCReturn<T> = {
+type UriBody = {
+  su_oss_chamado_executar: SuOSSChamadoExecutar
+  su_oss_chamado_fechar: SuOSSChamadoFechar
+}
+
+type UriPost = keyof UriBody
+
+export type IXCResponse<T> = {
   page: string
   total: number
   registros?: T[]
 }
 
 type UriReturnMap = {
-  cliente: IXCReturn<Cliente>
-  su_oss_chamado: IXCReturn<SuOSSChamado>
-  cidade: IXCReturn<Cidade>
-  cliente_contrato: IXCReturn<ClienteContrato>
-  radpop_radio_cliente_fibra: IXCReturn<RadpopRadioClienteFibra>
-  su_diagnostico: IXCReturn<SuDiagnostico>
-  su_oss_assunto: IXCReturn<SuOSSAssunto>
-  funcionarios: IXCReturn<Funcionarios>
+  cliente: IXCResponse<Cliente>
+  su_oss_chamado: IXCResponse<SuOSSChamado>
+  cidade: IXCResponse<Cidade>
+  cliente_contrato: IXCResponse<ClienteContrato>
+  radpop_radio_cliente_fibra: IXCResponse<RadpopRadioClienteFibra>
+  su_diagnostico: IXCResponse<SuDiagnostico>
+  su_oss_assunto: IXCResponse<SuOSSAssunto>
+  funcionarios: IXCResponse<Funcionarios>
+  fn_areceber: IXCResponse<FnAReceber>
+  su_oss_chamado_mensagem: IXCResponse<SuOSSChamadoMensagem>
+  su_ticket: IXCResponse<SuTicket>
+  wfl_tarefa: IXCResponse<WflTarefa>
+  radpop_radio: IXCResponse<RadpopRadio>
 }
 
 type Operator = '=' | '>' | '<' | '!='
@@ -55,6 +79,17 @@ type IXCQuery<T extends Uri> = {
   sortname?: UriColumnMap[T]
   sortorder?: 'asc' | 'desc'
   grid_param?: GridParam<T>[]
+}
+
+type IXCPostResponse = {
+  type: string
+  message: string
+  id: number
+  atualiza_campos: {
+    tipo: string
+    campo: string
+    valor: string
+  }[]
 }
 
 type IXCConfig = {
@@ -87,7 +122,7 @@ class IXC {
   get = async <T extends Uri>(
     uri: T,
     { qtype, grid_param, ...rest }: IXCQuery<T>,
-  ): Promise<UriReturnMap[T]> =>
+  ): Promise<AxiosResponse<UriReturnMap[T]>> =>
     await this.fetch({
       method: 'GET',
       url: uri,
@@ -97,23 +132,16 @@ class IXC {
         ...rest,
       },
     })
-      .then((response) => response.data)
-      .catch((err) => err)
 
-  post = async <T extends Uri>(
+  post = async <T extends UriPost>(
     uri: T,
-    { qtype, ...rest }: IXCQuery<T>,
-  ): Promise<UriReturnMap[T]> =>
+    data: UriBody[T],
+  ): Promise<AxiosResponse<IXCPostResponse>> =>
     await this.fetch({
-      method: 'GET',
+      method: 'POST',
       url: uri,
-      data: {
-        qtype: `${uri}.${qtype}`,
-        ...rest,
-      },
+      data,
     })
-      .then((response) => response.data)
-      .catch((err) => err)
 }
 
 export default IXC
@@ -127,4 +155,8 @@ export {
   RadpopRadioClienteFibra,
   SuDiagnostico,
   SuOSSAssunto,
+  FnAReceber,
+  SuTicket,
+  WflTarefa,
+  RadpopRadio,
 }
