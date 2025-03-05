@@ -1,0 +1,36 @@
+export type RadpopRadioPorta = {
+  id: string
+  id_pop_radio: string
+  id_slot: string
+  numero_pon: string
+  interface: string
+  vlan_uplink: string
+  chwidth: string
+  chains: string
+  canal: string
+  potencia_pon: string
+  noise: string
+  security: string
+  potencia_limite: string
+  rssi: string
+  descricao: string
+  sinal: string
+  speed_wlan: string
+  ccq: string
+  ack: string
+  txrate: string
+  mode: string
+  rxrate: string
+  wds: string
+  codigo_do_pais: string
+  dfs: string
+  distancia: string
+  wpa: string
+  speed_lan: string
+  vlan_outros: string
+  vlan_iptv: string
+  vlan_voip: string
+  vlan_tr69: string
+  vlan_dhcp: string
+  vlan_pppoe: string
+}

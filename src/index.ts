@@ -14,6 +14,11 @@ import { SuTicket } from './@types/su_ticket'
 import { WflTarefa } from './@types/wfl_tarefa'
 import { SuOSSChamadoFechar } from './@types/su_oss_chamado_fechar'
 import { RadpopRadio } from './@types/radpop_radio'
+import { BotaoGravarDispositivo } from './@types/botao_gravar_dispositivo_22408'
+import { BotaoExcluirDispositivo } from './@types/botao_excluir_dispositivo_22434'
+import { RadCaixaFtth } from './@types/rad_caixa_ftth'
+import { RadUsuarios } from './@types/radusuarios'
+import { RadpopRadioPorta } from './@types/radpop_radio_porta'
 
 type UriColumnMap = {
   cliente: keyof Cliente
@@ -29,16 +34,27 @@ type UriColumnMap = {
   su_ticket: keyof SuTicket
   wfl_tarefa: keyof WflTarefa
   radpop_radio: keyof RadpopRadio
+  rad_caixa_ftth: keyof RadCaixaFtth
+  radusuarios: keyof RadUsuarios
+  radpop_radio_porta_fibra: keyof RadpopRadioPorta
 }
 
 type Uri = keyof UriColumnMap
 
-type UriBody = {
+type UriPostBody = {
   su_oss_chamado_executar: SuOSSChamadoExecutar
   su_oss_chamado_fechar: SuOSSChamadoFechar
+  botao_gravar_dispositivo_22408: BotaoGravarDispositivo
+  botao_excluir_dispositivo_22434: BotaoExcluirDispositivo
 }
 
-type UriPost = keyof UriBody
+type UriPost = keyof UriPostBody
+
+type UriPutBody = {
+  radpop_radio_cliente_fibra: RadpopRadioClienteFibra
+}
+
+type UriPut = keyof UriPutBody
 
 export type IXCResponse<T> = {
   page: string
@@ -60,6 +76,9 @@ type UriReturnMap = {
   su_ticket: IXCResponse<SuTicket>
   wfl_tarefa: IXCResponse<WflTarefa>
   radpop_radio: IXCResponse<RadpopRadio>
+  rad_caixa_ftth: IXCResponse<RadCaixaFtth>
+  radusuarios: IXCResponse<RadUsuarios>
+  radpop_radio_porta_fibra: IXCResponse<RadpopRadioPorta>
 }
 
 type Operator = '=' | '>' | '<' | '!='
@@ -127,7 +146,7 @@ class IXC {
       method: 'GET',
       url: uri,
       data: {
-        qtype: `${uri}.${qtype}`,
+        qtype: `${uri === 'radpop_radio_porta_fibra' ? 'radpop_radio_porta' : uri}.${qtype}`,
         grid_param: JSON.stringify(grid_param),
         ...rest,
       },
@@ -135,11 +154,22 @@ class IXC {
 
   post = async <T extends UriPost>(
     uri: T,
-    data: UriBody[T],
+    data: UriPostBody[T],
   ): Promise<AxiosResponse<IXCPostResponse>> =>
     await this.fetch({
       method: 'POST',
       url: uri,
+      data,
+    })
+
+  put = async <T extends UriPut>(
+    uri: T,
+    id: string,
+    data: UriPutBody[T],
+  ): Promise<AxiosResponse<IXCPostResponse>> =>
+    await this.fetch({
+      method: 'PUT',
+      url: `${uri}/${id}`,
       data,
     })
 }
@@ -148,15 +178,24 @@ export default IXC
 
 export {
   IXC,
-  Cidade,
   Cliente,
-  ClienteContrato,
   SuOSSChamado,
+  Cidade,
+  ClienteContrato,
   RadpopRadioClienteFibra,
   SuDiagnostico,
   SuOSSAssunto,
+  Funcionarios,
   FnAReceber,
+  SuOSSChamadoMensagem,
   SuTicket,
   WflTarefa,
   RadpopRadio,
+  RadCaixaFtth,
+  SuOSSChamadoExecutar,
+  SuOSSChamadoFechar,
+  BotaoGravarDispositivo,
+  BotaoExcluirDispositivo,
+  RadUsuarios,
+  RadpopRadioPorta,
 }
