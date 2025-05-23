@@ -8,7 +8,10 @@ import { SuDiagnostico } from './@types/su_diagnostico'
 import { SuOSSAssunto } from './@types/su_oss_assunto'
 import { Funcionarios } from './@types/funcionarios'
 import { FnAReceber } from './@types/fn_areceber'
-import { SuOSSChamadoMensagem } from './@types/su_oss_chamado_mensagem'
+import {
+  SuOSSChamadoMensagem,
+  SuOSSChamadoMensagemPost,
+} from './@types/su_oss_chamado_mensagem'
 import { SuOSSChamadoExecutar } from './@types/su_oss_chamado_executar'
 import { SuTicket } from './@types/su_ticket'
 import { WflTarefa } from './@types/wfl_tarefa'
@@ -46,6 +49,7 @@ type UriPostBody = {
   su_oss_chamado_fechar: SuOSSChamadoFechar
   botao_gravar_dispositivo_22408: BotaoGravarDispositivo
   botao_excluir_dispositivo_22434: BotaoExcluirDispositivo
+  su_oss_chamado_mensagem: SuOSSChamadoMensagemPost
 }
 
 type UriPost = keyof UriPostBody
