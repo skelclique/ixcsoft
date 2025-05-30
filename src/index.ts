@@ -22,6 +22,7 @@ import { BotaoExcluirDispositivo } from './@types/botao_excluir_dispositivo_2243
 import { RadCaixaFtth } from './@types/rad_caixa_ftth'
 import { RadUsuarios } from './@types/radusuarios'
 import { RadpopRadioPorta } from './@types/radpop_radio_porta'
+import { EmpresaSetor } from './@types/empresa_setor'
 
 type UriColumnMap = {
   cliente: keyof Cliente
@@ -40,6 +41,7 @@ type UriColumnMap = {
   rad_caixa_ftth: keyof RadCaixaFtth
   radusuarios: keyof RadUsuarios
   radpop_radio_porta_fibra: keyof RadpopRadioPorta
+  empresa_setor: keyof EmpresaSetor
 }
 
 type Uri = keyof UriColumnMap
@@ -83,6 +85,7 @@ type UriReturnMap = {
   rad_caixa_ftth: IXCResponse<RadCaixaFtth>
   radusuarios: IXCResponse<RadUsuarios>
   radpop_radio_porta_fibra: IXCResponse<RadpopRadioPorta>
+  empresa_setor: IXCResponse<EmpresaSetor>
 }
 
 type Operator = '=' | '>' | '<' | '!='
