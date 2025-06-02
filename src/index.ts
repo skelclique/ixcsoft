@@ -23,6 +23,7 @@ import { RadCaixaFtth } from './@types/rad_caixa_ftth'
 import { RadUsuarios } from './@types/radusuarios'
 import { RadpopRadioPorta } from './@types/radpop_radio_porta'
 import { EmpresaSetor } from './@types/empresa_setor'
+import { FnAreceberMotCancelamento } from './@types/fn_areceber_mot_cancelamento'
 
 type UriColumnMap = {
   cliente: keyof Cliente
@@ -42,6 +43,7 @@ type UriColumnMap = {
   radusuarios: keyof RadUsuarios
   radpop_radio_porta_fibra: keyof RadpopRadioPorta
   empresa_setor: keyof EmpresaSetor
+  fn_areceber_mot_cancelamento: keyof FnAreceberMotCancelamento
 }
 
 type Uri = keyof UriColumnMap
@@ -86,6 +88,7 @@ type UriReturnMap = {
   radusuarios: IXCResponse<RadUsuarios>
   radpop_radio_porta_fibra: IXCResponse<RadpopRadioPorta>
   empresa_setor: IXCResponse<EmpresaSetor>
+  fn_areceber_mot_cancelamento: IXCResponse<FnAreceberMotCancelamento>
 }
 
 type Operator = '=' | '>' | '<' | '!='
