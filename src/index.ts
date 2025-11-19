@@ -156,7 +156,9 @@ class IXC {
       method: 'GET',
       url: uri,
       data: {
-        qtype: `${uri === 'radpop_radio_porta_fibra' ? 'radpop_radio_porta' : uri}.${qtype}`,
+        qtype: `${
+          uri === 'radpop_radio_porta_fibra' ? 'radpop_radio_porta' : uri
+        }.${qtype}`,
         grid_param: JSON.stringify(grid_param),
         ...rest,
       },
