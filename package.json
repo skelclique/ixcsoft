@@ -1,11 +1,11 @@
 {
   "name": "@raimax/ixcsoft",
-  "version": "1.3.5",
+  "version": "1.3.8",
   "description": "",
   "main": "build/index",
   "types": "build/index",
   "scripts": {
-    "build": "rm -r build && tsc"
+    "build": "tsc"
   },
   "keywords": [],
   "author": "",

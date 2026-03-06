@@ -24,6 +24,7 @@ import { RadUsuarios } from './@types/radusuarios'
 import { RadpopRadioPorta } from './@types/radpop_radio_porta'
 import { EmpresaSetor } from './@types/empresa_setor'
 import { FnAreceberMotCancelamento } from './@types/fn_areceber_mot_cancelamento'
+import { RadpopOltSlot } from './@types/radpop_olt_slot'
 
 type UriColumnMap = {
   cliente: keyof Cliente
@@ -44,6 +45,7 @@ type UriColumnMap = {
   radpop_radio_porta_fibra: keyof RadpopRadioPorta
   empresa_setor: keyof EmpresaSetor
   fn_areceber_mot_cancelamento: keyof FnAreceberMotCancelamento
+  radpop_olt_slot: keyof RadpopOltSlot
 }
 
 type Uri = keyof UriColumnMap
@@ -89,6 +91,7 @@ type UriReturnMap = {
   radpop_radio_porta_fibra: IXCResponse<RadpopRadioPorta>
   empresa_setor: IXCResponse<EmpresaSetor>
   fn_areceber_mot_cancelamento: IXCResponse<FnAreceberMotCancelamento>
+  radpop_olt_slot: IXCResponse<RadpopOltSlot>
 }
 
 type Operator = '=' | '>' | '<' | '!='
@@ -132,11 +135,16 @@ class IXC {
   constructor(config: IXCConfig) {
     const { baseURL, token } = config
 
+    const [username, password] = token.split(':')
+
     this.fetch = axios.create({
+      auth: {
+        username,
+        password
+      },
       baseURL,
       headers: {
         'Content-Type': 'application/json',
-        Authorization: 'Basic ' + Buffer.from(token).toString('base64'),
         get: {
           ixcsoft: 'listar',
         },
